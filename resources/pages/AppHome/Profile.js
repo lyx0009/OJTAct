@@ -1,5 +1,4 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
-import LandingNavigator from './../Landing/LandingNavigator';
 
 export default function ProfileScreen({navigation}) {
   return (

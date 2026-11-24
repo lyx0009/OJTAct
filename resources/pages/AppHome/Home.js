@@ -1,5 +1,4 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
-import LandingNavigator from './../Landing/LandingNavigator';
 
 export default function HomeScreen({navigation}) {
   return (
@@ -9,7 +8,7 @@ export default function HomeScreen({navigation}) {
           title="Back to Login"
           onPress={() => {
             // Handle login logic here
-            navigation.navigate('Login');
+            navigation.navigate('Landing', { screen: 'Login' });
           }}
           ></Button>
 

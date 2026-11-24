@@ -17,7 +17,7 @@ export default function RegisterScreen({navigation}) {
           title="Submit"
           onPress={() => {
             // Handle registration logic here
-            navigation.navigate('Home');
+            navigation.navigate('AppHome');
           }}
           ></Button>
     </View>

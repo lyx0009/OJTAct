@@ -8,7 +8,7 @@ export default function LoginScreen({navigation}) {
           title="Login"
           onPress={() => {
             // Han login logic here
-            navigation.navigate('Home');
+            navigation.navigate('AppHome');
           }}
           ></Button>
 
