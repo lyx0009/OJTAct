@@ -1,4 +1,7 @@
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { loginAPI } from './../../api/Login/login';
 
 const colors = {
   background: '#e5ece8',
@@ -13,6 +16,30 @@ const colors = {
 };
 
 export default function LoginScreen({ navigation }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const { mutateAsync: loginFunction } = useMutation({
+    mutationKey: ["login-api"],
+    mutationFn: (data) => loginAPI(data),
+
+    onSuccess: (response) => {
+      console.log('Login successful:', response);
+    },
+    onError: (error) => {
+      alert(error.response?.data?.message || 'An error occurred');
+    },
+  })
+
+  const handleLogin = () => {
+    if (!email || !password) {
+      alert('Email and password are required.');
+      return;
+    }
+
+    loginFunction({ email, password });
+  };
+
   return (
     <KeyboardAvoidingView
       style={styles.screen}
@@ -35,6 +62,8 @@ export default function LoginScreen({ navigation }) {
             style={styles.input}
             placeholder="you@example.com"
             placeholderTextColor={colors.placeholder}
+            value={email}
+            onChangeText={setEmail}
             keyboardType="email-address"
             autoCapitalize="none"
             autoCorrect={false}
@@ -48,6 +77,8 @@ export default function LoginScreen({ navigation }) {
             style={styles.input}
             placeholder="Enter your password"
             placeholderTextColor={colors.placeholder}
+            value={password}
+            onChangeText={setPassword}
             secureTextEntry
             autoComplete="password"
             accessibilityLabel="Password"
@@ -56,7 +87,7 @@ export default function LoginScreen({ navigation }) {
 
           <Pressable
             accessibilityRole="button"
-            onPress={() => navigation.navigate('AppHome')}
+            onPress={handleLogin}
             style={({ pressed }) => [
               styles.loginButton,
               pressed && styles.buttonPressed,
